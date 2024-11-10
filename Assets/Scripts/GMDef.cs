@@ -16,3 +16,18 @@ public enum GMUIAddress
     None,
     GMPage_LobbyMain,
 }
+
+public enum GMStateProcess
+{
+    Init,
+    Scene,
+    UI,
+    Player,
+    End,
+}
+public enum GMGameState
+{
+    None,
+    Lobby,
+    Stage01,
+}
