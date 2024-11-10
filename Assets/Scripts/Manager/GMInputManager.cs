@@ -6,8 +6,6 @@ using System;
 
 public class GMInputManager : GMManagerBase<GMInputManager>
 {
-    [SerializeField]
-    private CircleCollider2D _mouseCollider;
     private GMInputAction _inputAction;
 
     public override IEnumerator GMAwake()
@@ -23,12 +21,6 @@ public class GMInputManager : GMManagerBase<GMInputManager>
     {
         _inputAction.Disable();
         base.OnDisable();
-    }
-    public int GetMouseID()
-    {
-        if (_mouseCollider != null)
-            return _mouseCollider.GetInstanceID();
-        return 0;
     }
     public void AddAction(string inputType, Action<InputAction.CallbackContext> callback)
     {
