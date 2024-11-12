@@ -32,16 +32,16 @@ public class GMStateManager : GMManagerBase<GMStateManager>
         if (_curState == null)
             yield break;
 
-        StartCoroutine(_curState.InitCo());
+        _curState.InitStep();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.Scene);
 
-        StartCoroutine(_curState.SceneCo());
+        _curState.SceneStep();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.UI);
 
-        StartCoroutine(_curState.UICo());
+        _curState.UIStep();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.Player);
 
-        StartCoroutine(_curState.PlayerCo());
+        _curState.PlayerStep();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.End);
     }
 }

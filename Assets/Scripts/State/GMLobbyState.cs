@@ -7,33 +7,27 @@ namespace GM.State
 {
     public class GMLobbyState : GMStateBase
     {
-        public override IEnumerator InitCo()
+        public override void InitStep()
         {
-
-
-            return base.InitCo();
+            base.InitStep();
         }
-        public override IEnumerator SceneCo()
+        public override void SceneStep()
         {
-            // 로비 씬 로드
-
-            return base.SceneCo();
+            GMSceneManager.Instance.LoadSceneAsync(GMScene.Lobby);
         }
-        public override IEnumerator UICo()
+        public override void OnLoadCompleteScene()
+        {
+            base.OnLoadCompleteScene();
+            base.SceneStep();
+        }
+        public override void UIStep()
         {
             // 로비 UI 로드
-            GMUIManager.Instance.LoadUIController(GMUIAddress.GMPage_LobbyMain, AsyncLoadUI);
-
-            yield return null;
+            GMUIManager.Instance.LoadUIController(GMUIAddress.GMPage_LobbyMain);
         }
-        private void AsyncLoadUI(GMUIController uiController)
+        public override void PlayerStep()
         {
-            if (uiController != null)
-                base.UICo();
-        }
-        public override IEnumerator PlayerCo()
-        {
-            return base.PlayerCo();
+            base.PlayerStep();
         }
     }
 }

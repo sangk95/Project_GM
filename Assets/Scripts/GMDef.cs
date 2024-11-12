@@ -31,3 +31,9 @@ public enum GMGameState
     Lobby,
     Stage01,
 }
+public enum GMScene
+{
+    None,
+    Lobby,
+    Stage01,
+}

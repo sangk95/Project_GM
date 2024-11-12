@@ -4,30 +4,31 @@ using UnityEngine;
 
 namespace GM.State
 {
-    public class GMStateBase : MonoBehaviour
+    public class GMStateBase
     {
         private GMStateProcess _curProcess = GMStateProcess.Init;
         public GMStateProcess CurProcess => _curProcess;
 
-        public virtual IEnumerator InitCo()
+        public virtual void InitStep()
         {
-            yield return null;
+            GMSceneManager.Instance.OnLoadCompleteScene += OnLoadCompleteScene;
             _curProcess = GMStateProcess.Scene;
         }
-        public virtual IEnumerator SceneCo()
+        public virtual void SceneStep()
         {
-            yield return null;
             _curProcess = GMStateProcess.UI;
         }
-        public virtual IEnumerator UICo()
+        public virtual void UIStep()
         {
-            yield return null;
             _curProcess = GMStateProcess.Player;
         }
-        public virtual IEnumerator PlayerCo()
+        public virtual void PlayerStep()
         {
-            yield return null;
             _curProcess = GMStateProcess.End;
+        }
+        public virtual void OnLoadCompleteScene()
+        {
+            GMSceneManager.Instance.OnLoadCompleteScene -= OnLoadCompleteScene;
         }
     }
 }
