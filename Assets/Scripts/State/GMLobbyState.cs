@@ -13,7 +13,7 @@ namespace GM.State
         }
         public override void SceneStep()
         {
-            GMSceneManager.Instance.LoadSceneAsync(GMScene.Lobby);
+            GMSceneManager.Instance.LoadSceneAsync_Single(GMScene.Lobby);
         }
         public override void OnLoadCompleteScene()
         {

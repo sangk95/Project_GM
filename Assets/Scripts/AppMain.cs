@@ -6,11 +6,22 @@ public class AppMain : MonoBehaviour
 {
     List<GMManagerBase> _listManager = new List<GMManagerBase>();
     GMInputManager _inputManager;
+    GMSceneManager _sceneManager;
+    GMUIManager _uiManager;
+
+    GMStateManager _stateManager;
 
     private void Awake()
     {
-        _inputManager = FindObjectOfType<GMInputManager>();
+        _inputManager = GetComponent<GMInputManager>();
+        _sceneManager = GetComponent<GMSceneManager>();
+        _uiManager = GetComponent<GMUIManager>();
+        _stateManager = GetComponent<GMStateManager>();
+
         _listManager.Add(_inputManager);
+        _listManager.Add(_sceneManager);
+        _listManager.Add(_uiManager);
+        _listManager.Add(_stateManager);
     }
     private void Start()
     {

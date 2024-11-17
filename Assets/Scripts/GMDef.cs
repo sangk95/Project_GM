@@ -34,6 +34,15 @@ public enum GMGameState
 public enum GMScene
 {
     None,
+    StandBy,
     Lobby,
     Stage01,
+}
+public enum GMPlayerState
+{
+
+}
+public enum GMPlayerAnim
+{
+
 }

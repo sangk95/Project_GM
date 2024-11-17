@@ -22,10 +22,19 @@ public class GMStateManager : GMManagerBase<GMStateManager>
             case GMGameState.Lobby:
                 {
                     _curState = new GMLobbyState();
-                    ChangeStateCo();
                 }
                 break;
+            case GMGameState.Stage01:
+                {
+                    _curState = new GMStateStage01();
+                }
+                break;
+
+            default:
+                Debug.LogError("Wrong GameState - " + gameState);
+                return;
         }
+        StartCoroutine(ChangeStateCo());
     }
     private IEnumerator ChangeStateCo()
     {

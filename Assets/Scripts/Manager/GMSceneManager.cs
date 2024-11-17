@@ -14,6 +14,7 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
     private bool _isLoadProcess;
 
     public Action OnLoadCompleteScene;
+    public Action OnUnLoadCompleteScene;
 
     public override IEnumerator GMAwake()
     {
@@ -39,6 +40,22 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
         string sceneName = sceneType.ToString();
         Addressables.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Additive).Completed += LoadCompleteScene;
     }
+    public void LoadSceneAsync_Single(GMScene sceneType)
+    {
+        if(_isLoadProcess == true)
+        {
+            _queueLateChangeScene.Enqueue(sceneType);
+            return;
+        }
+        if (_dicSceneInstance.ContainsKey(_curLoadScene) == true)
+            return;
+
+        _curLoadScene = sceneType;
+        _isLoadProcess = true;
+
+        string sceneName = sceneType.ToString();
+        Addressables.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single).Completed += LoadCompleteScene_Single;
+    }
     public void UnLoadSceneAsync(GMScene sceneType)
     {
         if(_dicSceneInstance.ContainsKey(sceneType) == false)
@@ -46,7 +63,7 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
             Debug.LogError($"UnLoadSceneAsync - {sceneType} doesn't exist");
             return;
         }
-        Addressables.UnloadSceneAsync(_dicSceneInstance[sceneType]);
+        Addressables.UnloadSceneAsync(_dicSceneInstance[sceneType]).Completed += UnLoadCompleteScene;
     }
     private void LoadCompleteScene(AsyncOperationHandle<SceneInstance> handle)
     {
@@ -67,5 +84,45 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
             if (OnLoadCompleteScene != null)
                 OnLoadCompleteScene.Invoke();
         }
+    }
+    private void LoadCompleteScene_Single(AsyncOperationHandle<SceneInstance> handle)
+    {
+        if (handle.Status != AsyncOperationStatus.Succeeded)
+            return;
+
+        _dicSceneInstance.Clear();
+
+        _dicSceneInstance.Add(_curLoadScene, handle.Result);
+        
+        _curLoadScene = GMScene.None;
+        _isLoadProcess = false;
+
+        if (_queueLateChangeScene.Count > 0)
+        {
+            LoadSceneAsync(_queueLateChangeScene.Dequeue());
+        }
+        else
+        {
+            if (OnLoadCompleteScene != null)
+                OnLoadCompleteScene.Invoke();
+        }
+    }
+    private void UnLoadCompleteScene(AsyncOperationHandle<SceneInstance> handle)
+    {
+        if (handle.Status != AsyncOperationStatus.Succeeded)
+            return;
+
+        if (_dicSceneInstance.ContainsValue(handle.Result) == false)
+            return;
+        foreach(var data in _dicSceneInstance)
+        {
+            if (data.Value.Scene == handle.Result.Scene)
+            {
+                _dicSceneInstance.Remove(data.Key);
+                break;
+            }
+        }
+        if (OnUnLoadCompleteScene != null)
+            OnUnLoadCompleteScene.Invoke();
     }
 }

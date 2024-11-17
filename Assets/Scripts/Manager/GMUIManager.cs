@@ -27,10 +27,6 @@ public class GMUIManager : GMManagerBase<GMUIManager>
 
         StartCoroutine(CheckCloseUI());
 
-        // test Code
-        // order 관리 해야함
-        LoadUIController(GMUIAddress.GMPage_LobbyMain);
-
         return base.GMAwake();
     }
     private IEnumerator CheckCloseUI()

@@ -15,6 +15,7 @@ namespace GM.UI
             base.UIInit();
             if(_btnStartGame != null)
             {
+                _btnStartGame.SetText("GameStart");
                 _btnStartGame.AddUICallBack(GMUIState.Click, _strClick_StartGame.GetHashCode());
                 _btnStartGame.CallBack += UICallBack;
             }

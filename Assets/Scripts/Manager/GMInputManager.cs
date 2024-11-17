@@ -11,16 +11,8 @@ public class GMInputManager : GMManagerBase<GMInputManager>
     public override IEnumerator GMAwake()
     {
         _inputAction = new GMInputAction();
-        return base.GMAwake();
-    }
-    private void OnEnable()
-    {
         _inputAction.Enable();
-    }
-    protected override void OnDisable()
-    {
-        _inputAction.Disable();
-        base.OnDisable();
+        return base.GMAwake();
     }
     public void AddAction(string inputType, Action<InputAction.CallbackContext> callback)
     {
@@ -33,6 +25,16 @@ public class GMInputManager : GMManagerBase<GMInputManager>
             action.performed += callback;
             action.canceled -= callback;
             action.canceled += callback;
+        }
+    }
+    public void RemoveAction(string inputType, Action<InputAction.CallbackContext> callback)
+    {
+        InputAction action = _inputAction.asset.FindAction(inputType);
+        if (action != null && callback != null)
+        {
+            action.started -= callback;
+            action.performed -= callback;
+            action.canceled -= callback;
         }
     }
     public Vector2 GetMoveValue()
