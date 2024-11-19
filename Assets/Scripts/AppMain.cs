@@ -8,8 +8,10 @@ public class AppMain : MonoBehaviour
     GMInputManager _inputManager;
     GMSceneManager _sceneManager;
     GMUIManager _uiManager;
-
     GMStateManager _stateManager;
+
+    GMCharacterManager _characterManager;
+    GMCameraManager _cameraManager;
 
     private void Awake()
     {
@@ -17,11 +19,15 @@ public class AppMain : MonoBehaviour
         _sceneManager = GetComponent<GMSceneManager>();
         _uiManager = GetComponent<GMUIManager>();
         _stateManager = GetComponent<GMStateManager>();
+        _characterManager = GetComponent<GMCharacterManager>();
+        _cameraManager = GetComponent<GMCameraManager>();
 
         _listManager.Add(_inputManager);
         _listManager.Add(_sceneManager);
         _listManager.Add(_uiManager);
         _listManager.Add(_stateManager);
+        _listManager.Add(_characterManager);
+        _listManager.Add(_cameraManager);
     }
     private void Start()
     {

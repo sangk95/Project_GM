@@ -23,7 +23,13 @@ namespace GM.State
         public override void UIStep()
         {
             // 로비 UI 로드
-            GMUIManager.Instance.LoadUIController(GMUIAddress.GMPage_LobbyMain);
+            GMUIManager.Instance.LoadUIController(GMUIAddress.GMPage_LobbyMain, AsyncLoadUI);
+        }
+        public void AsyncLoadUI(GMUIController uiController)
+        {
+            if (uiController == null || (uiController is GMPageLobbyMain) == false)
+                return;
+            base.UIStep();
         }
         public override void PlayerStep()
         {

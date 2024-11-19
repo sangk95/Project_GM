@@ -67,8 +67,22 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
     }
     private void LoadCompleteScene(AsyncOperationHandle<SceneInstance> handle)
     {
-        if (handle.Status != AsyncOperationStatus.Succeeded)
+        if (handle.Status != AsyncOperationStatus.Succeeded ||
+            handle.Result.Scene.IsValid() == false)
             return;
+        GameObject[] rootObjects = handle.Result.Scene.GetRootGameObjects();
+        if(rootObjects != null)
+        {
+            for(int i=0; i< rootObjects.Length; ++i)
+            {
+                Camera camera = rootObjects[i].GetComponent<Camera>();
+                if (camera != null)
+                {
+                    camera.enabled = false;
+                    rootObjects[i].SetActive(false);
+                }
+            }
+        }
 
         _dicSceneInstance.Add(_curLoadScene, handle.Result);
         
@@ -87,8 +101,22 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
     }
     private void LoadCompleteScene_Single(AsyncOperationHandle<SceneInstance> handle)
     {
-        if (handle.Status != AsyncOperationStatus.Succeeded)
+        if (handle.Status != AsyncOperationStatus.Succeeded ||
+            handle.Result.Scene.IsValid() == false)
             return;
+        GameObject[] rootObjects = handle.Result.Scene.GetRootGameObjects();
+        if (rootObjects != null)
+        {
+            for (int i = 0; i < rootObjects.Length; ++i)
+            {
+                Camera camera = rootObjects[i].GetComponent<Camera>();
+                if (camera != null)
+                {
+                    camera.enabled = false;
+                    rootObjects[i].SetActive(false);
+                }
+            }
+        }
 
         _dicSceneInstance.Clear();
 

@@ -32,7 +32,7 @@ public class GMPlayerController : MonoBehaviour
         GMInputManager.Instance.AddAction("NormalAttack", OnAttack_Normal);
         GMInputManager.Instance.AddAction("Dash", OnDash);
     }
-    public void OnDestroy()
+    public void OnDisable()
     {
         GMInputManager.Instance.RemoveAction("Move", OnMove);
         GMInputManager.Instance.RemoveAction("NormalAttack", OnAttack_Normal);
