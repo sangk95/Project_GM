@@ -7,6 +7,7 @@ public class GMStateManager : GMManagerBase<GMStateManager>
 {
     GMStateBase _curState;
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public override IEnumerator GMAwake()
     {
         _curState = new GMLobbyState();
@@ -41,16 +42,19 @@ public class GMStateManager : GMManagerBase<GMStateManager>
         if (_curState == null)
             yield break;
 
-        _curState.InitStep();
+        _curState.Init();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.Scene);
 
-        _curState.SceneStep();
+        _curState.LoadScene();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.UI);
 
-        _curState.UIStep();
+        _curState.LoadUI();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.Player);
 
-        _curState.PlayerStep();
+        _curState.LoadCharacter();
+        yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.ETC);
+        
+        _curState.LoadETC();
         yield return new WaitUntil(() => _curState.CurProcess == GMStateProcess.End);
     }
 }

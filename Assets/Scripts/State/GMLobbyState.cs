@@ -7,33 +7,34 @@ namespace GM.State
 {
     public class GMLobbyState : GMStateBase
     {
-        public override void InitStep()
+        public override void Init()
         {
-            base.InitStep();
+            base.Init();
         }
-        public override void SceneStep()
+        public override void LoadScene()
         {
             GMSceneManager.Instance.LoadSceneAsync_Single(GMScene.Lobby);
         }
-        public override void OnLoadCompleteScene()
+
+        protected override void OnLoadCompleteScene()
         {
             base.OnLoadCompleteScene();
-            base.SceneStep();
+            base.LoadScene();
         }
-        public override void UIStep()
+        public override void LoadUI()
         {
-            // ·Îºñ UI ·Îµå
+            // ï¿½Îºï¿½ UI ï¿½Îµï¿½
             GMUIManager.Instance.LoadUIController(GMUIAddress.GMPage_LobbyMain, AsyncLoadUI);
         }
         public void AsyncLoadUI(GMUIController uiController)
         {
             if (uiController == null || (uiController is GMPageLobbyMain) == false)
                 return;
-            base.UIStep();
+            base.LoadUI();
         }
-        public override void PlayerStep()
+        public override void LoadCharacter()
         {
-            base.PlayerStep();
+            base.LoadCharacter();
         }
     }
 }

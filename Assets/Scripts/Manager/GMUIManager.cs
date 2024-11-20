@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GMUIManager : GMManagerBase<GMUIManager>
 {
@@ -12,8 +13,8 @@ public class GMUIManager : GMManagerBase<GMUIManager>
     private Dictionary<GMUIAddress, GameObject> m_dicUIController;
     private Dictionary<GMUIAddress, DateTime> m_dicCloseUITime; // has delay
 
-    public GameObject m_rootCanvas;
-    public GMUIPool m_uiPool;
+    public GameObject _rootCanvas;
+    public GMUIPool _uiPool;
 
     public override IEnumerator GMAwake()
     {
@@ -22,8 +23,8 @@ public class GMUIManager : GMManagerBase<GMUIManager>
 
         m_waitTime = new WaitForSeconds(WAITTIME);
 
-        if(m_uiPool)
-            m_uiPool.LoadComplete += LoadCompleteController;
+        if(_uiPool)
+            _uiPool.LoadComplete += LoadCompleteController;
 
         StartCoroutine(CheckCloseUI());
 
@@ -39,7 +40,7 @@ public class GMUIManager : GMManagerBase<GMUIManager>
                 {
                     if((DateTime.Now - data.Value).Milliseconds > WAITTIME)
                     {
-                        m_uiPool.DestroyUI(data.Key);
+                        _uiPool.DestroyUI(data.Key);
                         m_dicCloseUITime.Remove(data.Key);
 
                         break;
@@ -57,14 +58,14 @@ public class GMUIManager : GMManagerBase<GMUIManager>
             Debug.LogWarning("Already Loaded UI Address ==== " + address);
             return;
         }
-        m_uiPool.GetUI(address, callBack);
+        _uiPool.GetUI(address, callBack);
     }
 
     private void LoadCompleteController(GMUIAddress address, GameObject obj, Action<GMUIController> callBack)
     {
         if (obj == null)
             return;
-        obj.transform.SetParent(m_rootCanvas.transform);
+        obj.transform.SetParent(_rootCanvas.transform);
 
         if(m_dicCloseUITime.ContainsKey(address) == true)
         {
@@ -104,7 +105,7 @@ public class GMUIManager : GMManagerBase<GMUIManager>
 
             m_dicCloseUITime[controller.m_address] = DateTime.Now;
 
-            m_uiPool.ReturnUI(controller.m_address, obj);
+            _uiPool.ReturnUI(controller.m_address, obj);
 
             m_dicUIController.Remove(controller.m_address);
         }
@@ -122,7 +123,7 @@ public class GMUIManager : GMManagerBase<GMUIManager>
 
             m_dicCloseUITime[address] = DateTime.Now;
 
-            m_uiPool.ReturnUI(address, obj);
+            _uiPool.ReturnUI(address, obj);
 
             m_dicUIController.Remove(address);
         }

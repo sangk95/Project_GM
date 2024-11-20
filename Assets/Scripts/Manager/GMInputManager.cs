@@ -43,6 +43,8 @@ public class GMInputManager : GMManagerBase<GMInputManager>
     }
     public Vector2 GetMousePosition()
     {
-        return Camera.main.ScreenToWorldPoint(_inputAction.PC.MousePosition.ReadValue<Vector2>());
+        if (Camera.main != null)
+            return Camera.main.ScreenToWorldPoint(_inputAction.PC.MousePosition.ReadValue<Vector2>());
+        return Vector2.zero;
     }
 }

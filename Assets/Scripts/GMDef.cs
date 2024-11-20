@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// ReSharper disable InconsistentNaming
 
 public enum GMUIState
 {
@@ -23,6 +24,7 @@ public enum GMStateProcess
     Scene,
     UI,
     Player,
+    ETC,
     End,
 }
 public enum GMGameState
@@ -40,9 +42,12 @@ public enum GMScene
 }
 public enum GMPlayerState
 {
-
+    None,
+    Default,
 }
 public enum GMPlayerAnim
 {
-
+    None,
+    Idle,
+    Run,
 }

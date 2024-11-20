@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,25 +8,26 @@ namespace GM.State
 {
     public class GMStateStage01 : GMStateBase
     {
-        public override void InitStep()
+        public override void Init()
         {
-            base.InitStep();
+            base.Init();
         }
-        public override void SceneStep()
+        public override void LoadScene()
         {
             GMSceneManager.Instance.LoadSceneAsync_Single(GMScene.Stage01);
         }
-        public override void OnLoadCompleteScene()
+
+        protected override void OnLoadCompleteScene()
         {
             base.OnLoadCompleteScene();
-            base.SceneStep();
+            base.LoadScene();
         }
-        public override void UIStep()
+        public override void LoadUI()
         {
-            // UI ·Îµå
-            base.UIStep();
+            // UI ï¿½Îµï¿½
+            base.LoadUI();
         }
-        public override void PlayerStep()
+        public override void LoadCharacter()
         {
             GMCharacterManager.Instance.OnCompleteCreateCharacter += OnCreateComplete;
             GMCharacterManager.Instance.CreateMyCharacter();
@@ -56,24 +58,24 @@ namespace GM.State
                             continue;
 
                         GMCameraManager.Instance.SetConfinerBoundingShape(collider);
-                        base.PlayerStep();
+                        base.LoadCharacter();
                         return;
                     }
                 }
             }
 
-            base.PlayerStep();
+            base.LoadCharacter();
         }
         public PolygonCollider2D FindObjectInChildren(GameObject parent)
         {
-            // ºÎ¸ð °´Ã¼¿¡¼­ PolygonCollider2D °Ë»ö
+            // ï¿½Î¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ PolygonCollider2D ï¿½Ë»ï¿½
             PolygonCollider2D collider = parent.GetComponent<PolygonCollider2D>();
             if (collider != null)
             {
                 return collider;
             }
 
-            // ÀÚ½Ä °´Ã¼µé ¼øÈ¸
+            // ï¿½Ú½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¸
             foreach (Transform child in parent.transform)
             {
                 PolygonCollider2D childCollider = FindObjectInChildren(child.gameObject);
@@ -83,7 +85,7 @@ namespace GM.State
                 }
             }
 
-            // ¾øÀ¸¸é null ¹ÝÈ¯
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ null ï¿½ï¿½È¯
             return null;
         }
     }

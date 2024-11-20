@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GMPlayerStateBase
+namespace Player.State
 {
-    protected virtual void OnStateEnter()
+    public class GMPlayerStateBase
     {
+        protected virtual void OnStateEnter()
+        {
 
-    }
-    protected virtual void OnStateExit()
-    {
+        }
+        protected virtual void OnStateExit()
+        {
 
+        }
     }
 }

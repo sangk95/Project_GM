@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba700334ef434e48b3fe05d5c2e943f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rootCanvas: {fileID: 523488935}
-  m_uiPool: {fileID: 453868961}
+  _rootCanvas: {fileID: 523488935}
+  _uiPool: {fileID: 453868961}
 --- !u!114 &453868963
 MonoBehaviour:
   m_ObjectHideFlags: 0

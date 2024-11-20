@@ -144,11 +144,10 @@ public class GMSceneManager : GMManagerBase<GMSceneManager>
             return;
         foreach(var data in _dicSceneInstance)
         {
-            if (data.Value.Scene == handle.Result.Scene)
-            {
-                _dicSceneInstance.Remove(data.Key);
-                break;
-            }
+            if (data.Value.Scene != handle.Result.Scene)
+                continue;
+            _dicSceneInstance.Remove(data.Key);
+            break;
         }
         if (OnUnLoadCompleteScene != null)
             OnUnLoadCompleteScene.Invoke();
