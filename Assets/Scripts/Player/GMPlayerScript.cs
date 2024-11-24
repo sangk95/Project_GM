@@ -12,7 +12,7 @@ namespace Player
             _controller = GetComponent<GMPlayerController>();
             _stateMachine = GetComponent<GMPlayerStateMachine>();
             if (_controller != null)
-                _controller.Init();
+                _controller.Init(this);
             if(_stateMachine != null)
                 _stateMachine.Init();
             

@@ -48,6 +48,7 @@ public enum GMPlayerState
 public enum GMPlayerAnim
 {
     None,
-    Idle,
-    Run,
+    Player_Idle,
+    Player_Run,
+    Player_Dash,
 }
