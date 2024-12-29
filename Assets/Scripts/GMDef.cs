@@ -16,6 +16,7 @@ public enum GMUIAddress
 {
     None,
     GMPage_LobbyMain,
+    GMPage_InGame,
 }
 
 public enum GMStateProcess
@@ -30,8 +31,8 @@ public enum GMStateProcess
 public enum GMGameState
 {
     None,
-    Lobby,
-    Stage01,
+    State_Lobby,
+    State_Main,
 }
 public enum GMScene
 {

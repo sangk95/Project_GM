@@ -20,14 +20,14 @@ public class GMStateManager : GMManagerBase<GMStateManager>
     {
         switch(gameState)
         {
-            case GMGameState.Lobby:
+            case GMGameState.State_Lobby:
                 {
                     _curState = new GMLobbyState();
                 }
                 break;
-            case GMGameState.Stage01:
+            case GMGameState.State_Main:
                 {
-                    _curState = new GMStateStage01();
+                    _curState = new GMMainState();
                 }
                 break;
 

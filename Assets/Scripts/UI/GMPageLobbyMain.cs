@@ -7,8 +7,11 @@ namespace GM.UI
     public class GMPageLobbyMain : GMUIController
     {
         private static string _strClick_StartGame = "Click StartGame";
+        private static string _strClick_Option = "Click Option";
 
+        [Header("Buttons")]
         public GMButton _btnStartGame;
+        public GMButton _btnOption;
 
         public override void UIInit()
         {
@@ -18,6 +21,12 @@ namespace GM.UI
                 _btnStartGame.SetText("GameStart");
                 _btnStartGame.AddUICallBack(GMUIState.Click, _strClick_StartGame.GetHashCode());
                 _btnStartGame.CallBack += UICallBack;
+            }
+            if(_btnOption != null)
+            {
+                _btnOption.SetText("Option");
+                _btnOption.AddUICallBack(GMUIState.Click, _strClick_Option.GetHashCode());
+                _btnOption.CallBack += UICallBack;
             }
         }
 
@@ -31,8 +40,12 @@ namespace GM.UI
                     {
                         if (hashCode == _strClick_StartGame.GetHashCode())
                         {
-                            GMStateManager.Instance.ChangeState(GMGameState.Stage01);
+                            GMStateManager.Instance.ChangeState(GMGameState.State_Main);
                             GMUIManager.Instance.CloseUIController(this);
+                        }
+                        else if(hashCode == _strClick_Option.GetHashCode())
+                        {
+                            // Load Popup Option UI
                         }
                     }
                     break;

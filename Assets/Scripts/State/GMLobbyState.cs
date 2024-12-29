@@ -23,7 +23,6 @@ namespace GM.State
         }
         public override void LoadUI()
         {
-            // �κ� UI �ε�
             GMUIManager.Instance.LoadUIController(GMUIAddress.GMPage_LobbyMain, AsyncLoadUI);
         }
         public void AsyncLoadUI(GMUIController uiController)
